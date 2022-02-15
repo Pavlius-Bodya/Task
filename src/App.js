@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState} from 'react';
+import './App.css'
+import Post from './components/Post';
+import PostForm from './components/PostForm';
 
 function App() {
+  const [posts,setPosts]=useState([])
+
+  const addPost=(userInput)=>{
+    if(userInput){
+      const newItem={
+        id: Math.random().toString(36).substr(2, 9),
+        massage:userInput
+      }
+      
+    setPosts([...posts,newItem])
+    }
+  }
+  const removePost=()=>{
+  }
+  const editPost=()=>{
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Hello world</h1>
+      <PostForm
+      addPost={addPost}/>
+      {posts.map((post)=>{
+        return(
+          <Post
+          post={post}
+          key={post.id}
+          removePost={removePost}
+          editPost={editPost}/>
+        )
+      })}
     </div>
   );
 }
