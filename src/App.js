@@ -5,26 +5,40 @@ import PostForm from './components/PostForm';
 
 function App() {
   const [posts,setPosts]=useState([])
+  const [edit,setEdit]=useState([])
 
   const addPost=(userInput)=>{
     if(userInput){
       const newItem={
-        id: Math.random().toString(36).substr(2, 9),
+        id:Date.now(),
         massage:userInput
       }
       
     setPosts([...posts,newItem])
     }
   }
-  const removePost=()=>{
+  console.log(posts)
+  const removePost=(id)=>{
+    setPosts([...posts.filter((post) => post.id !== id)])
   }
-  const editPost=()=>{
+  const editPost=(id,editingText)=>{
+    const updatedPost = [...posts].map((post) => {
+      if (post.id === id) {
+        post.massage = editingText;
+        
+      }
+      return post;
+    });
+    setPosts(updatedPost);
+    setEdit('Edit!');
   }
   return (
     <div className="App">
-      <h1>Hello world</h1>
+      <h1>Send your massage</h1>
       <PostForm
-      addPost={addPost}/>
+      addPost={addPost}  
+      editPost={editPost}    
+      edit={edit}/>
       {posts.map((post)=>{
         return(
           <Post

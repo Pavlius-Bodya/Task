@@ -1,16 +1,40 @@
 import React,{useState} from 'react';
 
-const PostForm=({addPost})=>{
+const PostForm=({editPost,edit,setEdit,addPost})=>{
+    const [editingText,setEditingText]=useState('')
     const [userInput,setUserInput]=useState('')
-  return (
+    const addUpdateForm=()=>{
+        editPost(editingText)
+        //setEdit('');
+        
+    }
+    const addForm=()=>{
+            addPost(userInput)
+        setUserInput('')  
+    }
+    return (
       <form>
-          <input
-          value={userInput}
-          type="text"
-          onChange={setUserInput}
-          placeholder="Input massage"
-          />
-          <button onClick={addPost(userInput)}>Send massage</button>
+          {edit=='Edit!'?
+            <div>
+              <input
+              value={editingText}
+              type="text"
+              onChange={(e) => setEditingText(e.target.value)}
+              placeholder="edit massage"
+              />
+              <button type='button' onClick={addUpdateForm}>edit massage</button>
+            </div>
+            :
+            <div>
+              <input
+              value={userInput}
+              type="text"
+              onChange={(e) => setUserInput(e.target.value)}
+              placeholder="Input massage"
+              />
+              <button type='button' onClick={addForm}>Send massage</button>
+            </div>}
+          
       </form>
   );
 }
